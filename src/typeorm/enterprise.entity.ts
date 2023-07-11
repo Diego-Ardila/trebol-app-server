@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Client } from './client.entity';
+import { FilesType } from 'src/enterprise/types';
 
 @Entity()
 export class Enterprise {
@@ -26,7 +27,7 @@ export class Enterprise {
     type: 'json',
     default: [],
   })
-  files: JSON;
+  files: FilesType[];
 
   @ManyToOne(type => Client)
   @JoinColumn()
