@@ -1,3 +1,4 @@
+import { InputsType } from 'src/template/types';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -18,5 +19,5 @@ export class Template {
     type: 'json',
     default: [],
   })
-  inputs: JSON;
+  inputs: InputsType[];
 }
