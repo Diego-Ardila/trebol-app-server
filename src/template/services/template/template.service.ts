@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTemplateDto } from 'src/template/template.dto';
 import { Template } from 'src/typeorm/template.entity';
@@ -15,8 +15,13 @@ export class TemplateService {
     return this.templateRepository.save(newTemplate);
   }
   
-  getTemplateById(id: number) {
-    return this.templateRepository.findOneBy({id});
+  async getTemplateById(id: number) {
+    const template = await this.templateRepository.findOneBy({id});
+    if (!template) {
+      throw new NotFoundException('El template no existe')
+    }
+
+    return template;
   }
 
   getTemplates() {

@@ -23,15 +23,19 @@ export class ClientService {
     return this.clientRepository.save(newClient);
   }
   
-  getClientById(id: number) {
-    return this.clientRepository.findOne({
+  async getClientById(id: number) {
+    const client = await this.clientRepository.findOne({
       relations: {
         template: true
       },
       where: {
         id
       }
-    });
+    });    
+    if (!client) {
+      throw new NotFoundException('El cliente no existe')
+    }
+    return client;
   }
 
   getClients() {

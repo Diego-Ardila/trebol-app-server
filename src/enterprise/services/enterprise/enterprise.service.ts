@@ -37,8 +37,12 @@ export class EnterpriseService {
     return this.enterpriseRepository.save(newEnterprise);
   }
 
-  getEnterpriseById(id: number) {
-    return this.enterpriseRepository.findOneBy({ id });
+  async getEnterpriseById(id: number) {
+    const enterprise = await this.enterpriseRepository.findOneBy({ id });
+    if (!enterprise) {
+      throw new NotFoundException('La empresa no existe')
+    }
+    return enterprise;
   }
 
   getEnterprises() {
