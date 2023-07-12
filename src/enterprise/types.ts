@@ -1,6 +1,10 @@
-export type FilesType = {
-  id: number,
-  name: string,
-  accept: string,
-  file?: string
+export type FileData = {
+  fileName: string,
+  file: Buffer,
+  mimeType: string
+}
+
+export type FileUploadParams = {
+  enterpriseId: string,
+  templateInputId: string,
 }
