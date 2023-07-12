@@ -3,7 +3,10 @@ export type InputsType = {
   name: string,
   accept: string,
   file?: {
+    contentType: string,
+    fileName: string,
     location: string,
-    key: string
+    key: string,
+    size: number
   }
 }

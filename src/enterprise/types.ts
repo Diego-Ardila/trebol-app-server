@@ -1,7 +1,8 @@
 export type FileData = {
   fileName: string,
   file: Buffer,
-  mimeType: string
+  mimeType: string,
+  size: number
 }
 
 export type FileUploadParams = {

@@ -45,7 +45,8 @@ export class EnterpriseController {
     const fileBody: FileData = {
       fileName: file.originalname,
       file: file.buffer,
-      mimeType: file.mimetype
+      mimeType: file.mimetype,
+      size: file.size
     }
     return this.enterpriseService.uploadFile(fileBody, params);
   }

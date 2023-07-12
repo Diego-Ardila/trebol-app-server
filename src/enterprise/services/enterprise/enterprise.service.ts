@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ServiceUnavailableException} from '@nestjs/common';
+import { Injectable, NotFoundException, ServiceUnavailableException, ConflictException} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { S3 } from 'aws-sdk';
@@ -17,6 +17,11 @@ export class EnterpriseService {
   ) { }
 
   async createEnterprise(body: CreateEnterpriseDto) {
+    const exitentEnterprise = await this.enterpriseRepository.findOneBy({ id: body.id });
+    if(exitentEnterprise) {
+      throw new ConflictException('El id de empresa ya existe')
+    }
+    
     const client = await this.clientRepository.findOne({
       relations: {
         template: true
@@ -78,8 +83,11 @@ export class EnterpriseService {
     }).promise();
 
     const loadedFile = {
+      contentType: fileData.mimeType,
+      fileName: fileData.fileName,
+      size: fileData.size,
       location: uploadResult.Location,
-      key: uploadResult.Key
+      key: uploadResult.Key,
     }
 
     enterprise.templateInputs[templateInputIndex].file = loadedFile;
